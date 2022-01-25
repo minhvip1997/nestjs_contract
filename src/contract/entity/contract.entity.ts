@@ -8,7 +8,7 @@ export class Contract {
   @Column()
   name: string;
 
-  @Column({nullable: true})
+  @Column("longtext",{nullable: true})
   content: string;
 
 }
