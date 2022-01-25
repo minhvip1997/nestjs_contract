@@ -21,6 +21,7 @@ export class UserController {
     @ApiConsumes('multipart/form-data')
     @ApiCreatedResponse({ type: CreatEmployeeDto})
     createEmployee(@Body() createEmployee: CreatEmployeeDto){
+        // console.log(createEmployee)
         return this.userService.createEmployee(createEmployee);
     }
 
