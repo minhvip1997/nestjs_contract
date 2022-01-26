@@ -1,4 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+
+import { Value } from 'src/value/entity/value.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, OneToMany } from 'typeorm';
 
 @Entity()
 export class Employee {
@@ -16,5 +18,8 @@ export class Employee {
 
   @Column({nullable: true})
   image: string;
+
+  @OneToMany(()=>Value, value=>value.employee, {eager:true})
+  values: Value[]
 
 }
