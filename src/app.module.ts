@@ -7,10 +7,12 @@ import { ContractModule } from './contract/contract.module';
 import { AttributeModule } from './attribute/attribute.module';
 import { TypevalueModule } from './typevalue/typevalue.module';
 import { ValueModule } from './value/value.module';
+import { EmployeecontractModule } from './employeecontract/employeecontract.module';
+import { TypeentityModule } from './typeentity/typeentity.module';
 import  config  from './../ormconfig';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(config),UserModule, ContractModule, AttributeModule, TypevalueModule, ValueModule],
+  imports: [TypeOrmModule.forRoot(config),UserModule, ContractModule, AttributeModule, TypevalueModule, ValueModule, EmployeecontractModule, TypeentityModule],
   controllers: [AppController],
   providers: [AppService],
 })
