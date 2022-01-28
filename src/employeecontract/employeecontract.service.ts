@@ -32,4 +32,13 @@ export class EmployeecontractService {
 
         return this.employeecontractrepository.save(newContractEmployee);
     }
+
+    async getOne(id: number): Promise<EmployeeContract> {
+        try {
+            const employee = await this.employeecontractrepository.findOne(id);
+            return employee;
+        } catch (error) {
+            throw error;
+        }
+    }
 }

@@ -26,7 +26,7 @@ export class EmployeecontractController {
         return this.employeecontractService.createNewContract(newContract);
     }
 
-    @Get(':id')
+    @Get('allcontract/:id')
     async getEmployeeContractId(@Param('id') id :number){
         // console.log(id)
         // const user = await getConnection()
@@ -59,5 +59,10 @@ export class EmployeecontractController {
         // console.log(user)
         return user;
 
+    }
+
+    @Get(':id')
+    getEmployeeContractid(@Param('id') id: number){
+        return this.employeecontractService.getOne(id);
     }
 }
