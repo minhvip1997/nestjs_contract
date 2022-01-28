@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes, ApiCreatedResponse } from '@nestjs/swagger';
+import { createQueryBuilder, getConnection } from 'typeorm';
 import { CreatEmployeeDto } from './dto/create-employee.dto';
 import { EditEmployeeDto } from './dto/edit-employee.dto';
 import { Employee } from './entity/employee.entity';
@@ -42,5 +43,7 @@ export class UserController {
     deleteEmployee(@Param('id') id: number){
         return this.userService.deleteEmployee(id);
     }
+
+    
 
 }
