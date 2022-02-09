@@ -9,10 +9,19 @@ import { TypevalueModule } from './typevalue/typevalue.module';
 import { ValueModule } from './value/value.module';
 import { EmployeecontractModule } from './employeecontract/employeecontract.module';
 import { TypeentityModule } from './typeentity/typeentity.module';
+import { PetsModule } from './pets/pets.module';
 import  config  from './../ormconfig';
+import { GraphQLModule } from '@nestjs/graphql';
+import { join } from 'path/posix';
+import { OwnersModule } from './owners/owners.module';
+
+
+
 
 @Module({
-  imports: [TypeOrmModule.forRoot(config),UserModule, ContractModule, AttributeModule, TypevalueModule, ValueModule, EmployeecontractModule, TypeentityModule],
+  imports: [GraphQLModule.forRoot({
+    autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+  }),TypeOrmModule.forRoot(config),UserModule, ContractModule, AttributeModule, TypevalueModule, ValueModule, EmployeecontractModule, TypeentityModule, PetsModule, OwnersModule],
   controllers: [AppController],
   providers: [AppService],
 })
