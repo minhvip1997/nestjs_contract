@@ -3,16 +3,16 @@ import { PartialType } from '@nestjs/swagger';
 import { CreatePetInput } from './create-pet.input';
 
 @InputType()
-export class UpdatePetInput extends PartialType(CreatePetInput) {
+export class UpdatePetInput extends CreatePetInput{
     @Field(()=>Int)
     id: number; 
 
-    @Field()
-    name: string;
+    // @Field({nullable: true})
+    // ownerId?: number;
 
-    @Field()
-    type: string;
+    // @Field()
+    // type?: string;
 
-    @Field(type=>Int)
-    ownerId: number;
+    @Field({nullable: true})
+    ownerId?: number;
 }

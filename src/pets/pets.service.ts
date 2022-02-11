@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Owner } from 'src/owners/entities/owner.entity';
 import { OwnersService } from 'src/owners/owners.service';
@@ -39,5 +39,33 @@ export class PetsService {
         const editPet = Object.assign(pet, updatePetInput);
         console.log(editPet)
         return  this.petsRepository.save(editPet);
+    }
+
+    public async update(
+        id: number,
+        updatePetInput,
+      ): Promise<Pet> {
+        // updateUserInput.password = bcrypt.hashSync(updateUserInput.password, 8);
+    
+        let found = await this.findOne(id);
+        // console.log(found)
+        return await this.petsRepository.save({ ...found, ...updatePetInput });
+      }
+
+      async deleteOne(id :number){
+          let found = await this.findOne(id);
+         this.petsRepository.remove(found);
+         return  id;
+      }
+
+      async remove(id: number) {
+        let proj = this.findOne(id)
+        if (proj) {
+            let ret = await this.petsRepository.delete(id)
+            if (ret.affected === 1) {
+                return proj;
+            }
+        }
+        throw new NotFoundException(`Record cannot find by id ${id}`)
     }
 }

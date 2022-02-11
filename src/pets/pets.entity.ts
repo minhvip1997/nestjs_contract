@@ -19,8 +19,8 @@ export class Pet{
     type?: string;
 
     @Column()
-    @Field(type=>Int)
-    ownerId: number;
+    @Field()
+    ownerId?: number;
 
     @ManyToOne(()=> Owner, owner=>owner.pets)
     @Field(type=>Owner)

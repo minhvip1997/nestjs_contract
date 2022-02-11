@@ -34,6 +34,12 @@ export class PetsResolver {
     @Mutation(returns=>Pet)
     updatePet(@Args('id',{type:()=>Int}) id: number,@Args('updatePetInput') updatePetInput: UpdatePetInput): Promise<Pet>{
         // console.log(id)
-        return this.petsService.editOne(id,updatePetInput);
+        return this.petsService.update(id,updatePetInput);
+    }
+
+    
+    @Mutation((returns)=>Pet)
+    deletePet(@Args('id', { type: () => Int}) id: number) {
+        return this.petsService.remove(id);
     }
 }
