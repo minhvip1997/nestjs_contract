@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Owner } from 'src/owners/entities/owner.entity';
 import { OwnersService } from 'src/owners/owners.service';
@@ -12,7 +12,10 @@ export class PetsService {
 
     constructor(
         @InjectRepository(Pet) private readonly petsRepository:Repository<Pet>,
-        private  ownerService: OwnersService
+        private  ownerService: OwnersService,
+        @Inject(forwardRef(() => PetsService))
+        private petsService: PetsService,
+
         ){}
 
     createPet(createPetInput: CreatePetInput): Promise<Pet>{
@@ -67,5 +70,10 @@ export class PetsService {
             }
         }
         throw new NotFoundException(`Record cannot find by id ${id}`)
+    }
+
+    async findAllByOwnerId(id: number): Promise<Pet[]>{
+        const result = await this.petsRepository.find({ownerId: id});
+        return result;
     }
 }

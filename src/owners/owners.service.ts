@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { PetsService } from 'src/pets/pets.service';
 import { Repository } from 'typeorm';
 import { CreateOwnerInput } from './dto/create-owner.input';
 import { UpdateOwnerInput } from './dto/update-owner.input';
@@ -7,7 +8,11 @@ import { Owner } from './entities/owner.entity';
 
 @Injectable()
 export class OwnersService {
-  constructor(@InjectRepository(Owner) private ownersRepository: Repository<Owner>){}
+  constructor(
+    @InjectRepository(Owner) private ownersRepository: Repository<Owner>,
+    @Inject(forwardRef(() => PetsService))
+    private petsService: PetsService,
+    ){}
 
   
   create(createOwnerInput: CreateOwnerInput) {
@@ -16,7 +21,10 @@ export class OwnersService {
   }
 
   findAll() {
-    return this.ownersRepository.find();
+    console.log(this.petsService)
+    return this.ownersRepository.find({
+      relations: ["pets"]
+    });
   }
 
   findOne(id: number) {
@@ -29,5 +37,11 @@ export class OwnersService {
 
   remove(id: number) {
     return `This action removes a #${id} owner`;
+  }
+  
+
+  async petsOfOwner(id: number){
+    const data  = await this.petsService.findAllByOwnerId(id);
+    return data;
   }
 }
