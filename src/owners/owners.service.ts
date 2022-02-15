@@ -44,4 +44,12 @@ export class OwnersService {
     const data  = await this.petsService.findAllByOwnerId(id);
     return data;
   }
+
+
+   async getOwnersByIds(ids: readonly number[]) {
+    
+    const owners = await this.ownersRepository.find();
+    // console.log(owners)
+    return owners.filter((u) => ids.includes(u.id));
+  }
 }

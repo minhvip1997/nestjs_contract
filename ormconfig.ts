@@ -15,7 +15,8 @@ const config: MysqlConnectionOptions ={
     ],
     cli:{
         migrationsDir: 'src/db/migrations'
-    }
+    },
+    logging: true
 }
 
 export default config;

@@ -1,4 +1,5 @@
-import { Args, Int, Mutation, Parent, Query, ResolveField, ResolveProperty, Resolver } from '@nestjs/graphql';
+import { Args, Context, Int, Mutation, Parent, Query, ResolveField, ResolveProperty, Resolver } from '@nestjs/graphql';
+import DataLoader from 'dataloader';
 import { Pet } from 'src/pets/pets.entity';
 import { PetsService } from 'src/pets/pets.service';
 import { createQueryBuilder } from 'typeorm';
@@ -41,8 +42,10 @@ export class OwnersResolver {
     }
 
     @ResolveField()
-    async pets(@Parent() owner: Owner) {
+    async pets(@Parent() owner: Owner,@Context('createPetsLoader') petsLoader: DataLoader<number, Pet>) {
       const { id } = owner;
-      return this.ownersService.petsOfOwner(id);
+      console.log(id)
+    //   return this.ownersService.petsOfOwner(id);
+        return await petsLoader.load(id);
     }
 }

@@ -1,5 +1,6 @@
 
-import { Resolver, Query, Args, Mutation, Int, Parent, ResolveField } from '@nestjs/graphql';
+import { Resolver, Query, Args, Mutation, Int, Parent, ResolveField, Context } from '@nestjs/graphql';
+import DataLoader from 'dataloader';
 import { Owner } from 'src/owners/entities/owner.entity';
 import { CreatePetInput } from './dto/create-pet.input';
 import { UpdatePetInput } from './dto/update-pet.input';
@@ -26,10 +27,10 @@ export class PetsResolver {
         return this.petsService.findOne(id);
     }
 
-    @ResolveField(returns=>Owner)
-    owner(@Parent() pet:Pet): Promise<Owner>{
-        return this.petsService.getOwner(pet.ownerId);
-    }
+    // @ResolveField(returns=>Owner)
+    // owner(@Parent() pet:Pet): Promise<Owner>{
+    //     return this.petsService.getOwner(pet.ownerId);
+    // }
 
     @Mutation(returns=>Pet)
     updatePet(@Args('id',{type:()=>Int}) id: number,@Args('updatePetInput') updatePetInput: UpdatePetInput): Promise<Pet>{
@@ -41,5 +42,12 @@ export class PetsResolver {
     @Mutation((returns)=>Pet)
     deletePet(@Args('id', { type: () => Int}) id: number) {
         return this.petsService.remove(id);
+    }
+
+    @ResolveField()
+    async owner(@Parent() pet: Pet, @Context('createOwnersLoader') ownersLoader: DataLoader<number, Owner>) {
+      const { ownerId } = pet;
+    //   console.log(id)
+        return await ownersLoader.load(ownerId);
     }
 }

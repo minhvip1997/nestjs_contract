@@ -14,13 +14,26 @@ import  config  from './../ormconfig';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path/posix';
 import { OwnersModule } from './owners/owners.module';
+import { OwnersService } from './owners/owners.service';
+import { createOwnersLoader } from './owners/owners.loader';
+import { createPetsLoader } from './pets/pets.loader';
+import { PetsService } from './pets/pets.service';
 
 
 
 
 @Module({
-  imports: [GraphQLModule.forRoot({
-    autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+  imports: [GraphQLModule.forRootAsync({
+    imports: [OwnersModule, PetsModule],
+    useFactory: (ownersService: OwnersService, petsService: PetsService) => ({
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      context: () => ({
+        randomValue: Math.random(),
+        createOwnersLoader: createOwnersLoader(ownersService),
+        createPetsLoader: createPetsLoader(petsService),
+      }),
+    }),
+    inject: [OwnersService, PetsService],
   }),TypeOrmModule.forRoot(config),UserModule, ContractModule, AttributeModule, TypevalueModule, ValueModule, EmployeecontractModule, TypeentityModule, PetsModule, OwnersModule],
   controllers: [AppController],
   providers: [AppService],

@@ -76,4 +76,11 @@ export class PetsService {
         const result = await this.petsRepository.find({ownerId: id});
         return result;
     }
+
+    async getPetsByIds(ids: readonly number[]) {
+    
+        const pets = await this.petsRepository.find();
+        // console.log(pets)
+        return pets.filter((u) => ids.includes(u.ownerId));
+      }
 }
