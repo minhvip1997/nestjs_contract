@@ -49,7 +49,7 @@ export class OwnersService {
    async getOwnersByIds(ids: readonly number[]) {
     
     const owners = await this.ownersRepository.find();
-    // console.log(owners)
+    // console.log(owners) 
     return owners.filter((u) => ids.includes(u.id));
   }
 }

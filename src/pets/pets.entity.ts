@@ -12,7 +12,7 @@ export class Pet{
 
     @Column()
     @Field()
-    name: string;
+    name?: string;
 
     @Column({nullable: true})
     @Field({nullable: true})

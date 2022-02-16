@@ -41,13 +41,13 @@ input UpdateOwnerInput {
 }
 
 input CreatePetInput {
-  name: String!
+  name: String
   type: String
-  ownerId: Int!
+  ownerId: Float
 }
 
 input UpdatePetInput {
-  name: String!
+  name: String
   type: String
   ownerId: Float
   id: Int!

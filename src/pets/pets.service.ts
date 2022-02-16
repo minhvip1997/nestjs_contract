@@ -80,7 +80,7 @@ export class PetsService {
     async getPetsByIds(ids: readonly number[]) {
     
         const pets = await this.petsRepository.find();
-        // console.log(pets)
+        // console.log(pets) 
         return pets.filter((u) => ids.includes(u.ownerId));
       }
 }

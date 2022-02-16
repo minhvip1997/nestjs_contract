@@ -6,14 +6,14 @@ import { Pet } from "../pets.entity";
 @InputType()
 export class CreatePetInput extends Pet{
 
-    @IsAlpha()
-    @Field()
-    name: string;
+    // @IsAlpha()
+    @Field({nullable: true})
+    name?: string; 
 
     @Field({nullable: true})
     type?: string;
 
-    @Field(type=>Int)
+    @Field({nullable: true})
     ownerId?: number;
 
 }
