@@ -2,6 +2,7 @@ import { Args, Context, Int, Mutation, Parent, Query, ResolveField, ResolvePrope
 import DataLoader from 'dataloader';
 import { Pet } from 'src/pets/pets.entity';
 import { PetsService } from 'src/pets/pets.service';
+import { Store } from 'src/store/store.entity';
 import { createQueryBuilder } from 'typeorm';
 import { CreateOwnerInput } from './dto/create-owner.input';
 import { UpdateOwnerInput } from './dto/update-owner.input';
@@ -47,5 +48,13 @@ export class OwnersResolver {
       console.log(id)
     //   return this.ownersService.petsOfOwner(id);
         return await petsLoader.load(id);
+    }
+
+    @ResolveField()
+    async stores(@Parent() owner: Owner,@Context('createStoreLoader') storesLoader: DataLoader<number, Store>) {
+      const { id } = owner;
+      console.log(id)
+    //   return this.ownersService.petsOfOwner(id);
+        return await storesLoader.load(id);
     }
 }

@@ -10,10 +10,18 @@ type Pet {
   owner: Owner!
 }
 
+type Store {
+  id: Int!
+  name: String!
+  address: String
+  owners: [Owner!]
+}
+
 type Owner {
   id: Int!
   name: String!
   pets: [Pet!]
+  stores: [Store!]
 }
 
 type Query {
@@ -21,6 +29,8 @@ type Query {
   owner(id: Int!): Owner!
   pets: [Pet!]!
   getPet(id: Int!): Pet!
+  stores: [Store!]!
+  getStore(id: Int!): Store!
 }
 
 type Mutation {

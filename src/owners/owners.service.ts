@@ -23,7 +23,7 @@ export class OwnersService {
   findAll() {
     console.log(this.petsService)
     return this.ownersRepository.find({
-      relations: ["pets"]
+      relations: ["stores","pets"]
     });
   }
 
